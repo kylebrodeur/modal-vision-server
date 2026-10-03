@@ -1,0 +1,12 @@
+# modal-vision-server
+
+> Vision classification with a model card. Deployed with `mtk` from a project overlay. Apache-2.0.
+
+## Docs
+
+- [Quickstart](https://github.com/kylebrodeur/modal-vision-server/blob/main/docs/quickstart.md): from a new project to a deployed vision package.
+- [How-to](https://github.com/kylebrodeur/modal-vision-server/blob/main/docs/how-to.md): day-to-day operation.
+
+## Toolkit
+
+- [Modal Toolkit](https://github.com/kylebrodeur/modal-toolkit): the operator CLI (`mtk`) and the full family.
