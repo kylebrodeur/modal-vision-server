@@ -1,0 +1,1016 @@
+{
+  "per_image": [
+    {
+      "taxon": "Alocasia zebrina",
+      "photo": "File:Alocasia zebrina 1zz.jpg",
+      "bioclip": [
+        [
+          "Alocasia zebrina",
+          0.887
+        ],
+        [
+          "Philodendron billietiae",
+          0.081
+        ],
+        [
+          "Alocasia longiloba",
+          0.023
+        ]
+      ],
+      "plantnet": [
+        [
+          "Alocasia zebrina",
+          0.99475
+        ]
+      ]
+    },
+    {
+      "taxon": "Alocasia zebrina",
+      "photo": "File:Alocasia zebrina 2zz.jpg",
+      "bioclip": [
+        [
+          "Monstera deliciosa",
+          0.983
+        ],
+        [
+          "Epipremnum aureum",
+          0.011
+        ],
+        [
+          "Monstera dubia",
+          0.004
+        ]
+      ],
+      "plantnet": [
+        [
+          "Colocasia esculenta",
+          0.04282
+        ],
+        [
+          "Colocasia fontanesii",
+          0.0372
+        ],
+        [
+          "Xanthosoma robustum",
+          0.03381
+        ]
+      ]
+    },
+    {
+      "taxon": "Alocasia micholitziana",
+      "photo": "File:Alocasia micholitziana.JPG",
+      "bioclip": [
+        [
+          "Alocasia zebrina",
+          0.467
+        ],
+        [
+          "Philodendron billietiae",
+          0.251
+        ],
+        [
+          "Alocasia micholitziana",
+          0.15
+        ]
+      ],
+      "plantnet": [
+        [
+          "Alocasia micholitziana",
+          0.89379
+        ],
+        [
+          "Alocasia longiloba",
+          0.01304
+        ],
+        [
+          "Alocasia sanderiana",
+          0.01204
+        ]
+      ]
+    },
+    {
+      "taxon": "Alocasia micholitziana",
+      "photo": "File:Alocasia micholitziana 3.JPG",
+      "bioclip": [
+        [
+          "Alocasia zebrina",
+          0.929
+        ],
+        [
+          "Alocasia micholitziana",
+          0.042
+        ],
+        [
+          "Alocasia baginda",
+          0.017
+        ]
+      ],
+      "plantnet": [
+        [
+          "Alocasia micholitziana",
+          0.90525
+        ],
+        [
+          "Alocasia sanderiana",
+          0.00886
+        ],
+        [
+          "Alocasia reginula",
+          0.00587
+        ]
+      ]
+    },
+    {
+      "taxon": "Alocasia longiloba",
+      "photo": "File:Alocasia longiloba, uma planta da fam\u00edlia Araceae.jpg",
+      "bioclip": [
+        [
+          "Alocasia micholitziana",
+          0.447
+        ],
+        [
+          "Monstera deliciosa",
+          0.343
+        ],
+        [
+          "Alocasia zebrina",
+          0.111
+        ]
+      ],
+      "plantnet": [
+        [
+          "Alocasia longiloba",
+          0.95282
+        ],
+        [
+          "Alocasia micholitziana",
+          0.01994
+        ],
+        [
+          "Alocasia reginula",
+          0.00704
+        ]
+      ]
+    },
+    {
+      "taxon": "Alocasia longiloba",
+      "photo": "File:Alocasia watsoniana 0zz.jpg",
+      "bioclip": [
+        [
+          "Alocasia micholitziana",
+          0.41
+        ],
+        [
+          "Alocasia reginula",
+          0.243
+        ],
+        [
+          "Alocasia zebrina",
+          0.131
+        ]
+      ],
+      "plantnet": [
+        [
+          "Alocasia longiloba",
+          0.76468
+        ],
+        [
+          "Alocasia sanderiana",
+          0.05236
+        ],
+        [
+          "Alocasia reginula",
+          0.01609
+        ]
+      ]
+    },
+    {
+      "taxon": "Alocasia sanderiana",
+      "photo": "File:Alocasia sanderiana (Bukidnon, Philippines) 0002.jpg",
+      "bioclip": [
+        [
+          "Ficus elastica",
+          0.645
+        ],
+        [
+          "Epipremnum aureum",
+          0.217
+        ],
+        [
+          "Ficus lyrata",
+          0.069
+        ]
+      ],
+      "plantnet": [
+        [
+          "Alocasia longiloba",
+          0.74153
+        ],
+        [
+          "Alocasia sanderiana",
+          0.11835
+        ],
+        [
+          "Alocasia micholitziana",
+          0.08091
+        ]
+      ]
+    },
+    {
+      "taxon": "Alocasia sanderiana",
+      "photo": "File:Alocasia sanderiana (Bukidnon, Philippines) 0003.jpg",
+      "bioclip": [
+        [
+          "Alocasia zebrina",
+          0.653
+        ],
+        [
+          "Alocasia micholitziana",
+          0.095
+        ],
+        [
+          "Alocasia baginda",
+          0.095
+        ]
+      ],
+      "plantnet": [
+        [
+          "Alocasia longiloba",
+          0.56568
+        ],
+        [
+          "Alocasia sanderiana",
+          0.33917
+        ],
+        [
+          "Alocasia micholitziana",
+          0.03777
+        ]
+      ]
+    },
+    {
+      "taxon": "Alocasia baginda",
+      "photo": "File:Alocasia baginda -1-NRI Layout-bengaluru-India.jpg",
+      "bioclip": [
+        [
+          "Monstera dubia",
+          0.858
+        ],
+        [
+          "Alocasia sanderiana",
+          0.062
+        ],
+        [
+          "Epipremnum aureum",
+          0.039
+        ]
+      ],
+      "plantnet": [
+        [
+          "Alocasia baginda",
+          0.96798
+        ],
+        [
+          "Alocasia heterophylla",
+          0.0018
+        ],
+        [
+          "Alocasia longiloba",
+          0.00129
+        ]
+      ]
+    },
+    {
+      "taxon": "Alocasia baginda",
+      "photo": "File:Alocasia baginda -2-NRI Layout-bengaluru-India.jpg",
+      "bioclip": [
+        [
+          "Ficus lyrata",
+          0.832
+        ],
+        [
+          "Monstera deliciosa",
+          0.133
+        ],
+        [
+          "Ficus elastica",
+          0.013
+        ]
+      ],
+      "plantnet": [
+        [
+          "Alocasia baginda",
+          0.91506
+        ],
+        [
+          "Alocasia longiloba",
+          0.00416
+        ],
+        [
+          "Alocasia heterophylla",
+          0.00396
+        ]
+      ]
+    },
+    {
+      "taxon": "Alocasia reginula",
+      "photo": "File:Alocasia reginula (Philippines) 02.jpg",
+      "bioclip": [
+        [
+          "Alocasia reginula",
+          0.699
+        ],
+        [
+          "Alocasia micholitziana",
+          0.285
+        ],
+        [
+          "Alocasia baginda",
+          0.01
+        ]
+      ],
+      "plantnet": [
+        [
+          "Alocasia reginula",
+          0.85212
+        ],
+        [
+          "Alocasia longiloba",
+          0.02098
+        ],
+        [
+          "Philodendron melanochrysum",
+          0.00947
+        ]
+      ]
+    },
+    {
+      "taxon": "Alocasia reginula",
+      "photo": "File:Alocasia reginula (Philippines) 03.jpg",
+      "bioclip": [
+        [
+          "Alocasia reginula",
+          0.982
+        ],
+        [
+          "Alocasia micholitziana",
+          0.014
+        ],
+        [
+          "Epipremnum aureum",
+          0.001
+        ]
+      ],
+      "plantnet": [
+        [
+          "Alocasia reginula",
+          0.90724
+        ],
+        [
+          "Alocasia longiloba",
+          0.03081
+        ],
+        [
+          "Anthurium regale",
+          0.00574
+        ]
+      ]
+    },
+    {
+      "taxon": "Monstera deliciosa",
+      "photo": "File:Monstera deliciosa - Wilhelma 01.jpg",
+      "bioclip": [
+        [
+          "Epipremnum aureum",
+          0.626
+        ],
+        [
+          "Ficus elastica",
+          0.334
+        ],
+        [
+          "Monstera adansonii",
+          0.019
+        ]
+      ],
+      "plantnet": [
+        [
+          "Monstera deliciosa",
+          0.89688
+        ],
+        [
+          "Monstera adansonii",
+          0.01066
+        ],
+        [
+          "Monstera dissecta",
+          0.00839
+        ]
+      ]
+    },
+    {
+      "taxon": "Monstera deliciosa",
+      "photo": "File:Monstera deliciosa 001.jpg",
+      "bioclip": [
+        [
+          "Monstera deliciosa",
+          0.907
+        ],
+        [
+          "Scindapsus pictus",
+          0.041
+        ],
+        [
+          "Epipremnum aureum",
+          0.02
+        ]
+      ],
+      "plantnet": [
+        [
+          "Monstera deliciosa",
+          0.97763
+        ],
+        [
+          "Monstera punctulata",
+          0.00191
+        ],
+        [
+          "Rhaphidophora decursiva",
+          0.00172
+        ]
+      ]
+    },
+    {
+      "taxon": "Monstera adansonii",
+      "photo": "File:Monstera adansonii 112059105.jpg",
+      "bioclip": [
+        [
+          "Epipremnum aureum",
+          0.524
+        ],
+        [
+          "Monstera adansonii",
+          0.238
+        ],
+        [
+          "Monstera dubia",
+          0.227
+        ]
+      ],
+      "plantnet": [
+        [
+          "Monstera lentii",
+          0.21023
+        ],
+        [
+          "Monstera oreophila",
+          0.14067
+        ],
+        [
+          "Monstera obliqua",
+          0.1266
+        ]
+      ]
+    },
+    {
+      "taxon": "Monstera adansonii",
+      "photo": "File:Monstera adansonii 112059118.jpg",
+      "bioclip": [
+        [
+          "Epipremnum aureum",
+          0.981
+        ],
+        [
+          "Monstera deliciosa",
+          0.012
+        ],
+        [
+          "Ficus lyrata",
+          0.003
+        ]
+      ],
+      "plantnet": [
+        [
+          "Anthurium pentaphyllum",
+          0.08052
+        ],
+        [
+          "Monstera oreophila",
+          0.05039
+        ],
+        [
+          "Anthurium clavigerum",
+          0.02372
+        ]
+      ]
+    },
+    {
+      "taxon": "Monstera dubia",
+      "photo": "File:Monstera dubia (Kunth) Engl. & K.Krause - par Mickael Schauli.jpg",
+      "bioclip": [
+        [
+          "Epipremnum aureum",
+          0.947
+        ],
+        [
+          "Alocasia reginula",
+          0.042
+        ],
+        [
+          "Monstera deliciosa",
+          0.005
+        ]
+      ],
+      "plantnet": [
+        [
+          "Monstera dubia",
+          0.86028
+        ],
+        [
+          "Monstera tuberculata",
+          0.11248
+        ],
+        [
+          "Philodendron brandtianum",
+          0.00693
+        ]
+      ]
+    },
+    {
+      "taxon": "Monstera dubia",
+      "photo": "File:Monstera dubia 31072571.jpg",
+      "bioclip": [
+        [
+          "Monstera dubia",
+          0.982
+        ],
+        [
+          "Epipremnum aureum",
+          0.011
+        ],
+        [
+          "Monstera deliciosa",
+          0.007
+        ]
+      ],
+      "plantnet": [
+        [
+          "Monstera punctulata",
+          0.30371
+        ],
+        [
+          "Monstera dubia",
+          0.21279
+        ],
+        [
+          "Philodendron radiatum",
+          0.02518
+        ]
+      ]
+    },
+    {
+      "taxon": "Philodendron hederaceum",
+      "photo": "File:Philodendron hederaceum, Singapore Botanic Gardens (141542).jpg",
+      "bioclip": [
+        [
+          "Epipremnum aureum",
+          0.694
+        ],
+        [
+          "Philodendron billietiae",
+          0.293
+        ],
+        [
+          "Alocasia zebrina",
+          0.005
+        ]
+      ],
+      "plantnet": [
+        [
+          "Philodendron erubescens",
+          0.61048
+        ],
+        [
+          "Philodendron sagittifolium",
+          0.03776
+        ],
+        [
+          "Philodendron quinquenervium",
+          0.02885
+        ]
+      ]
+    },
+    {
+      "taxon": "Philodendron hederaceum",
+      "photo": "File:Philodendron hederaceum kz01.jpg",
+      "bioclip": [
+        [
+          "Epipremnum aureum",
+          0.988
+        ],
+        [
+          "Monstera dubia",
+          0.006
+        ],
+        [
+          "Scindapsus pictus",
+          0.006
+        ]
+      ],
+      "plantnet": [
+        [
+          "Philodendron hederaceum",
+          0.57865
+        ],
+        [
+          "Monstera pittieri",
+          0.04175
+        ],
+        [
+          "Philodendron sagittifolium",
+          0.03503
+        ]
+      ]
+    },
+    {
+      "taxon": "Philodendron billietiae",
+      "photo": "File:Araceae (Philodendron billietiae) (40051211101).jpg",
+      "bioclip": [
+        [
+          "Epipremnum aureum",
+          0.584
+        ],
+        [
+          "Monstera dubia",
+          0.33
+        ],
+        [
+          "Ficus elastica",
+          0.075
+        ]
+      ],
+      "plantnet": [
+        [
+          "Philodendron billietiae",
+          0.2239
+        ],
+        [
+          "Philodendron spiritus-sancti",
+          0.07426
+        ],
+        [
+          "Philodendron quinquenervium",
+          0.04632
+        ]
+      ]
+    },
+    {
+      "taxon": "Philodendron billietiae",
+      "photo": "File:Philodendron billietiae 0zz.jpg",
+      "bioclip": [
+        [
+          "Epipremnum aureum",
+          0.474
+        ],
+        [
+          "Monstera dubia",
+          0.43
+        ],
+        [
+          "Scindapsus pictus",
+          0.046
+        ]
+      ],
+      "plantnet": [
+        [
+          "Philodendron billietiae",
+          0.62609
+        ],
+        [
+          "Philodendron quinquenervium",
+          0.11911
+        ],
+        [
+          "Philodendron burle-marxii",
+          0.06916
+        ]
+      ]
+    },
+    {
+      "taxon": "Philodendron verrucosum",
+      "photo": "File:PhilodendronVerrucosum.jpg",
+      "bioclip": [
+        [
+          "Epipremnum aureum",
+          0.708
+        ],
+        [
+          "Monstera adansonii",
+          0.077
+        ],
+        [
+          "Monstera deliciosa",
+          0.054
+        ]
+      ],
+      "plantnet": [
+        [
+          "Philodendron verrucosum",
+          0.95312
+        ],
+        [
+          "Begonia plebeja",
+          0.00368
+        ]
+      ]
+    },
+    {
+      "taxon": "Philodendron verrucosum",
+      "photo": "File:Philodendron verrucosum 58628594.jpg",
+      "bioclip": [
+        [
+          "Monstera dubia",
+          0.536
+        ],
+        [
+          "Monstera deliciosa",
+          0.298
+        ],
+        [
+          "Epipremnum aureum",
+          0.089
+        ]
+      ],
+      "plantnet": [
+        [
+          "Philodendron verrucosum",
+          0.99037
+        ]
+      ]
+    },
+    {
+      "taxon": "Epipremnum aureum",
+      "photo": "File:Epipremnum aureum 31082012.jpg",
+      "bioclip": [
+        [
+          "Epipremnum aureum",
+          0.988
+        ],
+        [
+          "Monstera dubia",
+          0.005
+        ],
+        [
+          "Philodendron hederaceum",
+          0.003
+        ]
+      ],
+      "plantnet": [
+        [
+          "Epipremnum pinnatum",
+          0.8419
+        ],
+        [
+          "Epipremnum aureum",
+          0.15183
+        ]
+      ]
+    },
+    {
+      "taxon": "Epipremnum aureum",
+      "photo": "File:Epipremnum aureum kz01.jpg",
+      "bioclip": [
+        [
+          "Epipremnum aureum",
+          0.997
+        ],
+        [
+          "Scindapsus pictus",
+          0.002
+        ],
+        [
+          "Ficus elastica",
+          0.001
+        ]
+      ],
+      "plantnet": [
+        [
+          "Epipremnum pinnatum",
+          0.14181
+        ],
+        [
+          "Epipremnum aureum",
+          0.11365
+        ],
+        [
+          "Philodendron quinquenervium",
+          0.10555
+        ]
+      ]
+    },
+    {
+      "taxon": "Scindapsus pictus",
+      "photo": "File:Scindapsus pictus 01.jpg",
+      "bioclip": [
+        [
+          "Scindapsus pictus",
+          1.0
+        ],
+        [
+          "Monstera deliciosa",
+          0.0
+        ],
+        [
+          "Epipremnum aureum",
+          0.0
+        ]
+      ],
+      "plantnet": [
+        [
+          "Scindapsus pictus",
+          0.97888
+        ],
+        [
+          "Philodendron brandtianum",
+          0.00343
+        ],
+        [
+          "Monstera dubia",
+          0.00258
+        ]
+      ]
+    },
+    {
+      "taxon": "Scindapsus pictus",
+      "photo": "File:Scindapsus pictus 1.jpg",
+      "bioclip": [
+        [
+          "Scindapsus pictus",
+          0.998
+        ],
+        [
+          "Epipremnum aureum",
+          0.001
+        ],
+        [
+          "Monstera adansonii",
+          0.0
+        ]
+      ],
+      "plantnet": [
+        [
+          "Scindapsus pictus",
+          0.7256
+        ],
+        [
+          "Philodendron brandtianum",
+          0.01096
+        ],
+        [
+          "Aglaonema pictum",
+          0.00542
+        ]
+      ]
+    },
+    {
+      "taxon": "Ficus elastica",
+      "photo": "File:Backlit ficus elastica leaf texture 2014 02.jpg",
+      "bioclip": [
+        [
+          "Epipremnum aureum",
+          0.816
+        ],
+        [
+          "Monstera deliciosa",
+          0.138
+        ],
+        [
+          "Scindapsus pictus",
+          0.037
+        ]
+      ],
+      "plantnet": [
+        [
+          "Treculia africana",
+          0.07728
+        ],
+        [
+          "Ficus scott-elliottii",
+          0.04628
+        ],
+        [
+          "Brosimum utile",
+          0.04132
+        ]
+      ]
+    },
+    {
+      "taxon": "Ficus elastica",
+      "photo": "File:Catania, Villa Bellini 2024f, Ficus elastica.jpg",
+      "bioclip": [
+        [
+          "Epipremnum aureum",
+          0.613
+        ],
+        [
+          "Alocasia reginula",
+          0.246
+        ],
+        [
+          "Monstera dubia",
+          0.109
+        ]
+      ],
+      "plantnet": [
+        [
+          "Ficus macrophylla",
+          0.79586
+        ],
+        [
+          "Ficus elastica",
+          0.01638
+        ],
+        [
+          "Ficus microcarpa",
+          0.00169
+        ]
+      ]
+    },
+    {
+      "taxon": "Ficus lyrata",
+      "photo": "File:Ficus lyrata 393081768.jpg",
+      "bioclip": [
+        [
+          "Ficus lyrata",
+          0.325
+        ],
+        [
+          "Epipremnum aureum",
+          0.308
+        ],
+        [
+          "Monstera dubia",
+          0.21
+        ]
+      ],
+      "plantnet": [
+        [
+          "Ficus lyrata",
+          0.6938
+        ],
+        [
+          "Nauclea orientalis",
+          0.01779
+        ],
+        [
+          "Coccoloba rugosa",
+          0.01696
+        ]
+      ]
+    },
+    {
+      "taxon": "Ficus lyrata",
+      "photo": "File:Ficus lyrata 98162192.jpg",
+      "bioclip": [
+        [
+          "Ficus lyrata",
+          0.738
+        ],
+        [
+          "Epipremnum aureum",
+          0.134
+        ],
+        [
+          "Ficus elastica",
+          0.093
+        ]
+      ],
+      "plantnet": [
+        [
+          "Ficus lyrata",
+          0.32832
+        ],
+        [
+          "Anthocleista grandiflora",
+          0.11122
+        ],
+        [
+          "Coccoloba spicata",
+          0.10775
+        ]
+      ]
+    }
+  ],
+  "summary": {
+    "bioclip": {
+      "n": 32,
+      "top1_hits": 11,
+      "accuracy": 0.344
+    },
+    "plantnet": {
+      "n": 32,
+      "top1_hits": 21,
+      "accuracy": 0.656
+    }
+  }
+}

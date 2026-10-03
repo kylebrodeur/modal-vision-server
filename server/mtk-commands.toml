@@ -1,0 +1,15 @@
+# Operator commands for `mtk vision`, mounted by the toolkit's command host
+# (modal-toolkit/toolkit/pkg_commands.py). Inert data: the server never reads it.
+# Kind "modal" runs `uv run modal <argv...>`; "probe" fires one health probe.
+
+[[command]]
+name = "deploy"
+summary = "deploy the vision server to Modal"
+kind = "modal"
+argv = ["deploy", "server/app.py"]
+timeout = 600
+
+[[command]]
+name = "warm"
+summary = "probe the vision lane (a cold boot starts on the request)"
+kind = "probe"

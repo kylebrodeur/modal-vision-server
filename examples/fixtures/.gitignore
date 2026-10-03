@@ -1,0 +1,4 @@
+# Image binaries are intentionally not tracked.
+*
+!.gitignore
+!README.md
