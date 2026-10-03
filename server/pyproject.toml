@@ -1,7 +1,7 @@
 [project]
-name = "modal-bioclip"
+name = "modal-vision-server"
 version = "0.1.0"
-description = "PlantFluent BioCLIP + SAM 2 vision service on Modal"
+description = "Generic Vision + SAM 2 vision service on Modal"
 requires-python = ">=3.11"
 dependencies = [
     "modal>=1.5.3",

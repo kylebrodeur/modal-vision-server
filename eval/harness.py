@@ -1,17 +1,17 @@
 """
-BioCLIP vs Pl@ntNet accuracy harness.
+Vision vs Pl@ntNet accuracy harness.
 
 Sources N images per taxon from Wikimedia Commons (botanically labeled),
-then scores each against both the deployed Modal BioCLIP endpoint and the
+then scores each against both the deployed Modal Vision endpoint and the
 Pl@ntNet identify API. Reports top-1 accuracy per model per taxon.
 
 Usage (uv):
-    cd backends/modal-bioclip
-    uv run python eval/harness.py --per-taxon 3 [--limit-taxa 4]
+    cd server
+    uv run python eval/harness.py --per-taxon 10 [--limit-taxa 4]
 
 Requires (env):
-    BIOCLIP_URL      deployed /v1/identify URL (default: kylebrodeur workspace)
-    BIOCLIP_TOKEN    shared bearer token (1Password: PlantFluent Modal BioCLIP)
+    MODAL_VISION_URL      deployed /v1/identify URL (default: kylebrodeur workspace)
+    MODAL_VISION_TOKEN    shared bearer token (1Password: Modal Vision Server)
     PLANTNET_API_KEY Pl@ntNet v2 key (1Password: PlantNet API)
 """
 from __future__ import annotations
@@ -37,7 +37,7 @@ COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 PHOTO_DIR = Path(__file__).parent / "photos"
 RESULTS_PATH = Path(__file__).parent / "results.json"
 
-UA = "PlantFluentBioClipEval/1.0 (development; kyle@brodeur.me)"
+UA = "ModalVisionEval/1.0 (development; kyle@brodeur.me)"
 
 
 def http_json(url: str, params: dict) -> dict:
@@ -84,14 +84,14 @@ def fetch_commons_images(taxon: str, per_taxon: int) -> list[tuple[str, bytes]]:
     return out[:per_taxon]
 
 
-def classify_bioclip(img_bytes: bytes, url: str, token: str) -> list[tuple[str, float]]:
+def classify_vision(img_bytes: bytes, url: str, token: str) -> list[tuple[str, float]]:
     body = json.dumps({
         "images": ["data:image/jpeg;base64," + base64.b64encode(img_bytes).decode()],
     }).encode()
     req = urllib.request.Request(url, data=body, headers={
         "content-type": "application/json",
         "authorization": f"Bearer {token}",
-        "origin": "https://app.plantfluent.com",
+        "origin": "http://localhost:8080",
     })
     with urllib.request.urlopen(req, timeout=90) as resp:
         data = json.loads(resp.read())
@@ -132,11 +132,11 @@ def main() -> None:
     parser.add_argument("--reuse-photos", action="store_true", help="skip downloads if photos exist")
     args = parser.parse_args()
 
-    bioclip_url = os.environ.get("BIOCLIP_URL", "https://kylebrodeur--plantfluent-bioclip-bioclipservice-web.modal.run/v1/identify")
-    bioclip_token = os.environ.get("BIOCLIP_TOKEN", "")
+    vision_url = os.environ.get("MODAL_VISION_URL", "https://kylebrodeur--modal-vision-server-visionservice-web.modal.run/v1/identify")
+    vision_token = os.environ.get("MODAL_VISION_TOKEN", "")
     plantnet_key = os.environ.get("PLANTNET_API_KEY", "")
-    if not bioclip_token:
-        sys.exit("BIOCLIP_TOKEN not set (1Password: PlantFluent Modal BioCLIP)")
+    if not vision_token:
+        sys.exit("MODAL_VISION_TOKEN not set (1Password: Modal Vision Server)")
     if not plantnet_key:
         sys.exit("PLANTNET_API_KEY not set (1Password: PlantNet API)")
 
@@ -159,15 +159,15 @@ def main() -> None:
             continue
 
         for idx, (title, blob) in enumerate(photos):
-            row = {"taxon": taxon, "photo": title, "bioclip": None, "plantnet": None}
+            row = {"taxon": taxon, "photo": title, "vision": None, "plantnet": None}
             try:
-                bc = classify_bioclip(blob, bioclip_url, bioclip_token)
-                row["bioclip"] = bc[:3]
-                top = bc[0][0] if bc else ""
+                v = classify_vision(blob, vision_url, vision_token)
+                row["vision"] = v[:3]
+                top = v[0][0] if v else ""
                 hit = "HIT" if normalize(top) == normalize(taxon) else "MISS"
-                print(f"  bio  [{hit}] {top} ({bc[0][1] if bc else 0:.3f})")
+                print(f"  vis [{hit}] {top} ({v[0][1] if v else 0:.3f})")
             except Exception as exc:  # noqa: BLE001
-                print(f"  bio  ERROR {exc}", file=sys.stderr)
+                print(f"  vis ERROR {exc}", file=sys.stderr)
             try:
                 pn = classify_plantnet(blob, plantnet_key)
                 row["plantnet"] = pn[:3]
@@ -179,7 +179,7 @@ def main() -> None:
             results["per_image"].append(row)
 
     # Summary
-    for model in ("bioclip", "plantnet"):
+    for model in ("vision", "plantnet"):
         rows = [r for r in results["per_image"] if r[model]]
         hits = sum(1 for r in rows if r[model] and normalize(r[model][0][0]) == normalize(r["taxon"]))
         results["summary"][model] = {

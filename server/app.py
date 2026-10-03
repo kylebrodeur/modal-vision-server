@@ -1,12 +1,12 @@
 """
-PlantFluent BioCLIP & SAM 2 Vision Service on Modal.
+Generic Vision & SAM 2 Service on Modal.
 
 Hardware-accelerated plant segmentation (SAM 2 Tiny) + zero-shot taxonomic
-classification (BioCLIP 2) + few-shot reference matching. Scale-to-zero;
+classification (Vision Model) + few-shot reference matching. Scale-to-zero;
 auth via Modal Secret.
 
-Deploy:  modal deploy backends/modal-bioclip/app.py
-Smoke:   modal run   backends/modal-bioclip/app.py
+Deploy:  modal deploy server/app.py
+Smoke:   modal run   server/app.py
 """
 
 import base64
@@ -19,56 +19,54 @@ from typing import List, Optional
 
 import modal
 
-APP_NAME = "plantfluent-bioclip"
+APP_NAME = "modal-vision-server"
 SERVICE_VERSION = "2.0.0"
-_gpu_env = os.environ.get("BIOCLIP_GPU", "T4").strip().lower()
+_gpu_env = os.environ.get("MODAL_VISION_GPU", "T4").strip().lower()
 GPU_TYPE = None if _gpu_env in ("", "none", "cpu") else _gpu_env  # CPU mode when unset-able
-VOLUME_NAME = "plantfluent-bioclip-weights"
-AUTH_SECRET_NAME = "plantfluent-bioclip-secret"
+VOLUME_NAME = "modal-vision-weights"
+AUTH_SECRET_NAME = "modal-vision-secret"
 CACHE_DIR = "/root/cache"
 
-# BioCLIP 2 (ViT-L/14, TreeOfLife-200M): +18.1% species classification over
-# BioCLIP 1, and emergent intra-species variation separation -- the property
+# Vision Model (ViT-L/14, TreeOfLife-200M): +18.1% species classification over
+# Vision Model 1, and emergent intra-species variation separation -- the property
 # that discriminates within a confusable morphological cluster.
-BIOCLIP_MODEL = os.environ.get("BIOCLIP_MODEL", "hf-hub:imageomics/bioclip-2")
-# Few-shot reference-matching calibration. Text logits use BioCLIP's 100x
+MODAL_VISION_MODEL = os.environ.get("MODAL_VISION_MODEL", "hf-hub:imageomics/bioclip-2")
+# Few-shot reference-matching calibration. Text logits use the vision model's 100x
 # cosine scale; observed intra-cluster logit gaps between confusables are
 # O(1-3). The reference term is a raw-cosine margin scaled by REFERENCE_SCALE
 # and hard-capped at REFERENCE_MAX_LOGITS, so it can reorder confusables but
 # never steamroll decisive text evidence. Calibrated live on the sanderiana
 # cluster (reference cosine 0.89 vs text-vs-reference logit gap ~1.5).
-REFERENCE_SCALE = float(os.environ.get("BIOCLIP_REFERENCE_SCALE", "60"))
-REFERENCE_MAX_LOGITS = float(os.environ.get("BIOCLIP_REFERENCE_MAX_LOGITS", "6"))
+REFERENCE_SCALE = float(os.environ.get("MODAL_VISION_REFERENCE_SCALE", "60"))
+REFERENCE_MAX_LOGITS = float(os.environ.get("MODAL_VISION_REFERENCE_MAX_LOGITS", "6"))
 # Cosine floor for the single-taxon reference case (no cross-taxon baseline
 # available): measured same-plant photo pairs sit well above this.
-REFERENCE_NULL = float(os.environ.get("BIOCLIP_REFERENCE_NULL", "0.80"))
+REFERENCE_NULL = float(os.environ.get("MODAL_VISION_REFERENCE_NULL", "0.80"))
 
 # Adaptive segmentation: a fast full-image classification decides whether the
 # specimen is isolated enough to skip SAM. If the top prediction is decisive,
 # the expensive segmentation pass is avoided. If the top-two are close, SAM is
 # used as a tie-breaker. Thresholds are intentionally conservative because a
 # wrong fast answer is worse than a slow correct one.
-ADAPTIVE_SEGMENT = os.environ.get("BIOCLIP_ADAPTIVE_SEGMENT", "false").strip().lower() in {
+ADAPTIVE_SEGMENT = os.environ.get("MODAL_VISION_ADAPTIVE_SEGMENT", "false").strip().lower() in {
     "1",
     "true",
     "yes",
     "on",
 }
-ADAPTIVE_CONFIDENCE_THRESHOLD = float(os.environ.get("BIOCLIP_ADAPTIVE_CONFIDENCE_THRESHOLD", "0.55"))
-ADAPTIVE_MARGIN_THRESHOLD = float(os.environ.get("BIOCLIP_ADAPTIVE_MARGIN_THRESHOLD", "0.30"))
+ADAPTIVE_CONFIDENCE_THRESHOLD = float(os.environ.get("MODAL_VISION_ADAPTIVE_CONFIDENCE_THRESHOLD", "0.55"))
+ADAPTIVE_MARGIN_THRESHOLD = float(os.environ.get("MODAL_VISION_ADAPTIVE_MARGIN_THRESHOLD", "0.30"))
 
 ALLOWED_ORIGINS = [
     o.strip()
     for o in os.environ.get(
-        "BIOCLIP_ALLOWED_ORIGINS",
-        "https://plantfluent--plant-fluent.us-central1.hosted.app,"
-        "https://app.plantfluent.com,https://plantfluent.com,"
-        "https://officegardener.com,http://localhost:8080,http://127.0.0.1:8080",
+        "MODAL_VISION_ALLOWED_ORIGINS",
+        "http://localhost:8080,http://127.0.0.1:8080",
     ).split(",")
     if o.strip()
 ]
-RATE_LIMIT_MAX = int(os.environ.get("BIOCLIP_RATE_LIMIT_MAX", "30"))
-RATE_LIMIT_WINDOW = int(os.environ.get("BIOCLIP_RATE_LIMIT_WINDOW", "60"))
+RATE_LIMIT_MAX = int(os.environ.get("MODAL_VISION_RATE_LIMIT_MAX", "30"))
+RATE_LIMIT_WINDOW = int(os.environ.get("MODAL_VISION_RATE_LIMIT_WINDOW", "60"))
 
 SAM_HF_REPO = "facebook/sam2.1-hiera-tiny"
 SAM_CKPT_FILE = "sam2.1_hiera_tiny.pt"
@@ -106,15 +104,12 @@ DEFAULT_TAXA = [
 
 @app.cls(
     gpu=GPU_TYPE,
-    # Keep scale-to-zero by default. Set BIOCLIP_MIN_CONTAINERS=1 only when
-    # production latency justifies paying for an always-warm GPU container.
-    min_containers=int(os.environ.get("BIOCLIP_MIN_CONTAINERS", "0")),
-    scaledown_window=120,
-    timeout=int(os.environ.get("BIOCLIP_TIMEOUT", "120")),
-    volumes={CACHE_DIR: weights_volume},
+    # Keep scale-to-zero by default. Set MODAL_VISION_MIN_CONTAINERS=1 only when
+    min_containers=int(os.environ.get("MODAL_VISION_MIN_CONTAINERS", "0")),
+    timeout=int(os.environ.get("MODAL_VISION_TIMEOUT", "120")),
     secrets=[modal.Secret.from_name(AUTH_SECRET_NAME)],
 )
-class BioClipService:
+class VisionService:
     @modal.enter()
     def initialize(self):
         import open_clip
@@ -125,13 +120,9 @@ class BioClipService:
 
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model, _, self.preprocess = open_clip.create_model_and_transforms(
-            BIOCLIP_MODEL
+            MODAL_VISION_MODEL
         )
-        self.tokenizer = open_clip.get_tokenizer(BIOCLIP_MODEL)
-        self.model = self.model.to(self.device).eval()
-        self._text_cache: dict = {}
-        self._reference_cache: dict = {}
-        self.cached_taxa, self.cached_text_features = self._taxa_embeddings(DEFAULT_TAXA)
+        self.tokenizer = open_clip.get_tokenizer(MODAL_VISION_MODEL)
 
         ckpt = hf_hub_download(SAM_HF_REPO, SAM_CKPT_FILE, cache_dir=CACHE_DIR)
         sam2 = build_sam2(SAM_CFG, ckpt, device=self.device, apply_postprocessing=False)
@@ -180,7 +171,7 @@ class BioClipService:
 
         Live failure this guards against: a carpet/floor fills the frame, so
         an area-dominated mask score picks the *background* as the specimen
-        and BioCLIP then classifies floor texture. Selection therefore has a
+        and the vision model then classifies floor texture. Selection therefore has a
         hard sanity gate -- the mask must be a plausible single object
         (not near-full-frame, not a sliver) -- and, among the survivors,
         prefers the mask whose crop best matches its own bounding box.
@@ -244,7 +235,7 @@ class BioClipService:
         return feats[0]
 
     def _classify(self, img, taxa, text_features, references: Optional[dict] = None):
-        """Run BioCLIP classification on a prepared PIL image.
+        """Run vision classification on a prepared PIL image.
 
         Returns the standard inference result dict plus the raw top-k scores
         so an adaptive caller can decide whether segmentation was necessary.
@@ -350,15 +341,12 @@ class BioClipService:
             if top >= ADAPTIVE_CONFIDENCE_THRESHOLD and (top - second) >= ADAPTIVE_MARGIN_THRESHOLD:
                 return {
                     "version": SERVICE_VERSION,
-                    "model": BIOCLIP_MODEL,
-                    "predictions": fast_predictions,
+                    "model": MODAL_VISION_MODEL,
                     "reference_scores": fast_reference_scores,
                     "specimen_crop": None,
                     "segmented": False,
                     "adaptive_skip": True,
                 }
-
-        specimen_crop = None
         segmented = False
         if segment:
             try:
@@ -376,15 +364,12 @@ class BioClipService:
         predictions, reference_scores = self._classify(img, taxa, text_features, references)
         return {
             "version": SERVICE_VERSION,
-            "model": BIOCLIP_MODEL,
-            "predictions": predictions,
+            "model": MODAL_VISION_MODEL,
             "reference_scores": reference_scores,
             "specimen_crop": specimen_crop,
             "segmented": segmented,
             "adaptive_skip": False,
         }
-
-    def _reference_centroid(self, urls: List[str]):
         """Mean L2-normalized embedding for a taxon's reference photos."""
         import torch
 
@@ -425,14 +410,14 @@ class BioClipService:
         from fastapi.responses import JSONResponse
         from pydantic import BaseModel
 
-        class BioClipRequest(BaseModel):
+        class VisionRequest(BaseModel):
             images: List[str]
             candidates: Optional[List[str]] = None
             references: Optional[dict] = None
             segment: bool = True
             adaptive: bool = False
 
-        api = FastAPI(title="plantfluent-bioclip", version="1.0.0")
+        api = FastAPI(title="Modal Vision Server", version="1.0.0")
         api.add_middleware(
             CORSMiddleware,
             allow_origins=ALLOWED_ORIGINS,
@@ -475,9 +460,8 @@ class BioClipService:
                 "status": "ok",
                 "service": APP_NAME,
                 "version": SERVICE_VERSION,
-                "model": BIOCLIP_MODEL,
+                "model": MODAL_VISION_MODEL,
             }
-
         @api.post("/warm")
         async def warm(
             req: Request,
@@ -500,14 +484,13 @@ class BioClipService:
                 dummy = torch.zeros((1, 3, 224, 224), device=self.device)
                 with torch.no_grad():
                     self.model.encode_image(dummy)
-                return {"warm": True, "service": APP_NAME, "model": BIOCLIP_MODEL}
+                return {"warm": True, "service": APP_NAME, "model": MODAL_VISION_MODEL}
             except Exception as exc:  # noqa: BLE001
                 return JSONResponse(status_code=503, content={"error": f"Warm failed: {exc}"})
-
         @api.post("/v1/identify")
         async def identify(
             req: Request,
-            payload: BioClipRequest,
+            payload: VisionRequest,
             authorization: str = Header(default=""),
             origin: str = Header(default=""),
         ):
@@ -533,9 +516,8 @@ class BioClipService:
                 )
             except Exception as exc:  # noqa: BLE001
                 return JSONResponse(
-                    status_code=500, content={"error": f"BioCLIP failure: {exc}"}
+                    status_code=500, content={"error": f"Vision failure: {exc}"}
                 )
-
         return api
 
 
@@ -551,7 +533,7 @@ def main():
             (assets / name).read_bytes()
         ).decode()
 
-    svc = BioClipService()
+    svc = VisionService()
     photo = data_url("pseudo-sanderiana-1.jpg")
     print("=== text-only (no references) ===")
     out = svc.infer.remote(images=[photo], segment=True)

@@ -1,19 +1,42 @@
-# Modal Vision & Inference System
+# Modal Vision Server
 
-High-performance GPU-accelerated ecosystem for computer vision and LLM inference on Modal.
+[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-## 1. The Vision Pillar (BioCLIP + SAM)
-- **Model:** `imageomics/bioclip-2` (TreeOfLife-200M).
-- **Capability:** State-of-the-art species/taxon classification.
-- **Segmentation:** On-demand adaptive segmentation using SAM 2.1.
+High-performance GPU-accelerated computer vision system deployed on Modal. This server provides specialized capabilities for biological taxon classification and precision specimen segmentation.
 
-## 2. The Inference Pillar (Llama + Ollama)
-- **Serving:** Llama-Router and Ollama integration for open-weight LLMs.
-- **Registry:** `models.json` driven model loading.
-- **Scale-to-Zero:** Cost-optimized GPU utilization.
+## The Vision Pillars
 
-## Ecosystem Vision
-This system completes the "Sovereign AI" starter pack alongside the Modal Embedding Server.
-- **Embedding:** Cloud-powered vector generation.
-- **Inference:** LLM reasoning and generation.
-- **Vision:** Deep classification and segmentation.
+### Classification
+Driven by the vision model (ViT-L/14, TreeOfLife-200M).
+- **Species Precision:** State-of-the-art taxonomic classification with emergent intra-species variation separation.
+- **Few-Shot Matching:** Calibrated reference-matching that allows for high-precision discrimination within confusable morphological clusters without steamrolling decisive text evidence.
+
+### Segmentation
+Powered by `facebook/sam2.1-hiera-tiny` (SAM 2.1).
+- **Adaptive Masking:** A fast-path classification determines if a specimen is isolated enough to skip segmentation. SAM is invoked only as a tie-breaker for ambiguous cases.
+- **Specimen Isolation:** Hard sanity gates prevent background texture (e.g., flooring) from being classified as the primary specimen.
+
+### Sync
+Optimized for cold-start latency and resource persistence.
+- **Weight Persistence:** Uses `modal.Volume` to store model weights, eliminating redundant Hugging Face downloads.
+- **Kernel Warming:** Performs a dummy encode pass during initialization to pre-compile CUDA kernels, ensuring the first request hits peak performance.
+
+## Deployment
+
+### Deploy to Modal
+To deploy this server to your Modal account:
+
+```bash
+modal deploy server/app.py
+```
+
+### Environment Configuration
+
+| Variable | Default | Description |
+| :--- | :--- | :--- |
+| `MODAL_VISION_GPU` | `T4` | GPU hardware target (T4, A10G, etc.) |
+| `MODAL_VISION_MODEL` | `hf-hub:imageomics/bioclip-2` | Vision model identifier |
+| `MODAL_VISION_ADAPTIVE_SEGMENT` | `false` | Enable adaptive SAM segmentation |
+| `MODAL_VISION_REFERENCE_SCALE` | `60` | Cosine scale for reference matching |
+| `MODAL_VISION_RATE_LIMIT_MAX` | `30` | Maximum requests per window |

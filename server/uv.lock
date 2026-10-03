@@ -437,7 +437,7 @@ wheels = [
 ]
 
 [[package]]
-name = "modal-bioclip"
+name = "modal-vision-server"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
