@@ -1,0 +1,21 @@
+{
+  "_comment": "Image-only demonstration card: DINOv2 is a pure image encoder, so encode_texts is unsupported and zero-shot text classification is unavailable. Classification requires few-shot reference images: pass `references` per label in the request. Runs classify-only with no segmenter, so it is CPU-eligible (MODAL_VISION_GPU=none).",
+  "main_model_hf_id": "facebook/dinov2-base",
+  "backend": "transformers",
+  "_comment_prompt_template": "Image-only encoders ignore prompt_template; leave it empty. Classification requires reference images.",
+  "prompt_template": "",
+  "similarity_scale": 1.0,
+  "reference_scale": 1.0,
+  "reference_max_logit_add": 0.0,
+  "reference_null_floor": 0.0,
+  "segmenter_kind": "none",
+  "segmenter_hf_repo": "",
+  "segmenter_ckpt": "",
+  "segmenter_config": "",
+  "fast_gate_kind": "none",
+  "fast_gate_confidence": 0.0,
+  "fast_gate_margin": 0.0,
+  "fast_gate_script": null,
+  "fast_gate_url": null,
+  "label_defaults": null
+}
