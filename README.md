@@ -41,3 +41,22 @@ modal deploy server/app.py
 | `MODAL_VISION_ADAPTIVE_SEGMENT` | `false` | Enable adaptive SAM segmentation |
 | `MODAL_VISION_REFERENCE_SCALE` | `60` | Cosine scale for reference matching |
 | `MODAL_VISION_RATE_LIMIT_MAX` | `30` | Maximum requests per window |
+
+## Part of the Modal Ecosystem
+
+This repo is one of three standalone Modal utilities from the same author. Each is extractable and deployable on its own.
+
+- **[modal-embedding-server](https://github.com/kylebrodeur/modal-embedding-server):** GPU-backed embeddings with a monotonic sync protocol for local-first search.
+- **[modal-inference-server](https://github.com/kylebrodeur/modal-inference-server):** OpenAI-compatible LLM inference with hot-set routing and scale-to-zero.
+
+## Examples
+
+See [`examples/`](examples/) for a minimal, stdlib-only client (`classify_example.py`) you can copy directly into your own stack.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for ground rules and workflow.
+
+## License
+
+Apache-2.0 — see [LICENSE](LICENSE).
