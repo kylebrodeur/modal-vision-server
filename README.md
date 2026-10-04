@@ -1,7 +1,8 @@
 # Modal Vision Server
 
-[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-Apache%202.0-green.svg)](LICENSE)
+[![Sponsor](https://img.shields.io/badge/Sponsor-GitHub%20Sponsors-pink.svg)](https://github.com/sponsors/kylebrodeur)
 
 High-performance GPU-accelerated computer vision system deployed on Modal. This server provides specialized capabilities for biological taxon classification and precision specimen segmentation.
 
