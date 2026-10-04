@@ -15,9 +15,9 @@ import io
 import os
 import time
 from collections import defaultdict
-from typing import List, Optional
 
 import modal
+import torch
 
 APP_NAME = "modal-vision-server"
 SERVICE_VERSION = "2.0.0"
@@ -140,11 +140,11 @@ class VisionService:
             self.model.encode_image(dummy)
         weights_volume.commit()
 
-    def _precompute_taxa_embeddings(self, taxa_list: List[str]):
+    def _precompute_taxa_embeddings(self, taxa_list: list[str]):
         """Warm the process-wide cache. Returns nothing; see `_taxa_embeddings`."""
         self._taxa_embeddings(taxa_list)
 
-    def _taxa_embeddings(self, taxa_list: List[str]):
+    def _taxa_embeddings(self, taxa_list: list[str]):
         """Return (taxa, L2-normalized text features) for one request.
 
         Keyed by the exact taxon tuple: a request that supplies its own
@@ -199,7 +199,7 @@ class VisionService:
                 yield mask, area, frac, x, y, bw, bh
 
         def score(entry):
-            mask, area, frac, x, y, bw, bh = entry
+            _mask, area, frac, x, y, bw, bh = entry
             # Tightness: how much of the bbox the mask fills. A background
             # region scores high on area but low on tightness relative to a
             # coherent leaf; bbox fill directly measures that.
@@ -234,7 +234,7 @@ class VisionService:
             feats = feats / feats.norm(dim=-1, keepdim=True)
         return feats[0]
 
-    def _classify(self, img, taxa, text_features, references: Optional[dict] = None):
+    def _classify(self, img, taxa, text_features, references: dict | None = None):
         """Run vision classification on a prepared PIL image.
 
         Returns the standard inference result dict plus the raw top-k scores
@@ -264,10 +264,7 @@ class VisionService:
                 for index, value in enumerate(centroids):
                     if value is None:
                         continue
-                    if len(present) == 1:
-                        margin = max(value - REFERENCE_NULL, 0.0)
-                    else:
-                        margin = value - baseline
+                    margin = max(value - REFERENCE_NULL, 0.0) if len(present) == 1 else value - baseline
                     add = max(-REFERENCE_MAX_LOGITS, min(REFERENCE_MAX_LOGITS, REFERENCE_SCALE * margin))
                     text_logits[0, index] += add
 
@@ -281,16 +278,16 @@ class VisionService:
                 "common_names": [],
                 "reference_score": reference_scores.get(taxa[i]),
             }
-            for s, i in zip(scores.tolist(), idx.tolist())
+            for s, i in zip(scores.tolist(), idx.tolist(), strict=False)
         ]
         return predictions, reference_scores
 
     def _infer(
         self,
-        images: List[str],
+        images: list[str],
         segment: bool,
-        candidates: Optional[List[str]],
-        references: Optional[dict] = None,
+        candidates: list[str] | None,
+        references: dict | None = None,
         adaptive: bool = False,
     ):
         """Classify the specimen; optional few-shot references per taxon.
@@ -309,7 +306,6 @@ class VisionService:
         still dominates unless a reference genuinely matches better -- the
         knowledge-inversion fix for clusters where morphology beats text.
         """
-        import torch
 
         # Taxon space: an explicit candidate list wins; otherwise the curated
         # defaults are unioned with any taxa that have reference photos, so a
@@ -361,7 +357,7 @@ class VisionService:
             except Exception:
                 segmented = False
 
-        predictions, reference_scores = self._classify(img, taxa, text_features, references)
+        _predictions, reference_scores = self._classify(img, taxa, text_features, references)
         return {
             "version": SERVICE_VERSION,
             "model": MODAL_VISION_MODEL,
@@ -370,9 +366,9 @@ class VisionService:
             "segmented": segmented,
             "adaptive_skip": False,
         }
-        """Mean L2-normalized embedding for a taxon's reference photos."""
-        import torch
 
+    def _reference_embedding(self, urls: list[str], taxa: list[str]):
+        """Mean L2-normalized embedding for a taxon's reference photos."""
         if not urls:
             return None
         key = hashlib.sha256("|".join(sorted(urls)).encode()).hexdigest()[:32]
@@ -395,10 +391,10 @@ class VisionService:
     @modal.method()
     def infer(
         self,
-        images: List[str],
+        images: list[str],
         segment: bool = True,
-        candidates: Optional[List[str]] = None,
-        references: Optional[dict] = None,
+        candidates: list[str] | None = None,
+        references: dict | None = None,
         adaptive: bool = False,
     ):
         return self._infer(images, segment, candidates, references, adaptive)
@@ -411,9 +407,9 @@ class VisionService:
         from pydantic import BaseModel
 
         class VisionRequest(BaseModel):
-            images: List[str]
-            candidates: Optional[List[str]] = None
-            references: Optional[dict] = None
+            images: list[str]
+            candidates: list[str] | None = None
+            references: dict | None = None
             segment: bool = True
             adaptive: bool = False
 
@@ -485,7 +481,7 @@ class VisionService:
                 with torch.no_grad():
                     self.model.encode_image(dummy)
                 return {"warm": True, "service": APP_NAME, "model": MODAL_VISION_MODEL}
-            except Exception as exc:  # noqa: BLE001
+            except Exception as exc:
                 return JSONResponse(status_code=503, content={"error": f"Warm failed: {exc}"})
         @api.post("/v1/identify")
         async def identify(
@@ -514,7 +510,7 @@ class VisionService:
                     payload.references,
                     payload.adaptive,
                 )
-            except Exception as exc:  # noqa: BLE001
+            except Exception as exc:
                 return JSONResponse(
                     status_code=500, content={"error": f"Vision failure: {exc}"}
                 )
