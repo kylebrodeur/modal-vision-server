@@ -192,13 +192,21 @@ def observe(model, took_ms): print(model, f"{took_ms:.1f}ms")
 
 The tag set changes only in this package's releases.
 
+## Operator commands (`mtk`)
+
+This package ships an `mtk vision` command group in
+`server/mtk-commands.toml`; [modal-toolkit](https://github.com/kylebrodeur/modal-toolkit)
+mounts it when this repo is present in the workspace:
+
+- `mtk vision deploy` — deploy the vision server to Modal (`modal deploy server/app.py`).
+- `mtk vision warm` — probe the lane (a cold boot starts on the request).
+
 ## Part of the Modal Toolkit
 
 Seven standalone Modal utilities from the same author, each extractable and deployable on its own.
 
 - **[modal-embedding-server](https://github.com/kylebrodeur/modal-embedding-server):** GPU-backed embeddings with a monotonic sync protocol for private-first search.
 - **[modal-inference-server](https://github.com/kylebrodeur/modal-inference-server):** OpenAI-compatible LLM inference with hot-set routing and scale-to-zero.
-- **[modal-vision-server](https://github.com/kylebrodeur/modal-vision-server):** Generic vision classification: pick your model (open_clip or transformers weights), your segmenter (SAM 2.1 or none), and your fast gate (self, cheap CLIP, deterministic script, or external endpoint). The BioCLIP plant stack ships as the example card.
 - **[modal-finetune-server](https://github.com/kylebrodeur/modal-finetune-server):** Profile-driven LoRA fine-tune and GGUF pipeline with an honest eval gate.
 - **[modal-vault-server](https://github.com/kylebrodeur/modal-vault-server):** Hosted Obsidian vault + MCP memory plane: server-side clone via Headless Sync, searchable by MCP-speaking agents.
 - **[modal-toolkit](https://github.com/kylebrodeur/modal-toolkit):** One operator CLI (`mtk`) that runs the fleet: `doctor`, `secrets`, `warm --all`, `shutdown --all`, `cost`, `flow`, `dashboard`.
