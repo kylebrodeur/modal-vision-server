@@ -55,7 +55,7 @@ The whole service is configured by three independent choices. Set them once in a
 Two cards ship in [`registry/`](registry/) as loadable examples and copy targets:
 
 - [`registry/bioclip-plants.json`](registry/bioclip-plants.json): plants, adaptive, the deployment default. BioCLIP 2 via open_clip over 16 houseplant taxa, SAM 2 segmentation, and the `self` fast gate. Every card field matches the built-in defaults, but the card also sets `label_defaults` to 16 houseplant labels, so requests omitting `candidates` classify against that list. With no card at all the loader leaves `label_defaults` unset and a request must supply its own candidates.
-- [`registry/dinov2-objects.json`](registry/dinov2-objects.json): image-only demonstration card, **not currently executable**. DINOv2 via transformers has no text encoder, and the identify path encodes the label list through `encode_texts()` before any reference matching — an image-only encoder raises `NotImplementedError` there, so every request 500s. Provided as a backend demonstration and copy target; support for reference-only classification without a text encoder is planned.
+- [`registry/dinov2-objects.json`](registry/dinov2-objects.json): image-only demonstration card, **not currently executable**. DINOv2 via transformers has no text encoder, and the identify path encodes the label list through `encode_texts()` before any reference matching - an image-only encoder raises `NotImplementedError` there, so every request 500s. Provided as a backend demonstration and copy target; support for reference-only classification without a text encoder is planned.
 
 For the mechanics under the choices (request path, gate semantics, reference matching, caching), read [docs/HOW-IT-WORKS.md](docs/HOW-IT-WORKS.md).
 
@@ -198,8 +198,8 @@ This package ships an `mtk vision` command group in
 `server/mtk-commands.toml`; [modal-toolkit](https://github.com/kylebrodeur/modal-toolkit)
 mounts it when this repo is present in the workspace:
 
-- `mtk vision deploy` — deploy the vision server to Modal (`modal deploy server/app.py`).
-- `mtk vision warm` — probe the lane (a cold boot starts on the request).
+- `mtk vision deploy` - deploy the vision server to Modal (`modal deploy server/app.py`).
+- `mtk vision warm` - probe the lane (a cold boot starts on the request).
 
 ## Part of the Modal Toolkit
 

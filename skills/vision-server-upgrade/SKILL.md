@@ -26,7 +26,7 @@ uv run --project server pytest server/tests -q
 Vision-specific cautions:
 
 - The weights Volume (`modal-vision-weights`, shared name in-repo) holds
-  the BioCLIP/SAM weights — a plain-repo deploy WOULD attach that same
+  the BioCLIP/SAM weights - a plain-repo deploy WOULD attach that same
   Volume. Overlays compose their own volume names via deploy.json env;
   never let a lane attach the shared volume.
 - Model behavior comes from the model card (`registry/*.json` + env

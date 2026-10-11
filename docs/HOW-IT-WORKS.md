@@ -36,7 +36,7 @@ is a planned extension, not live behavior.
 checkpoint to the weights Volume and builds `build_sam2`; `_segment` runs
 mask generation and, among candidates that pass the hard isolation gates
 (no sliver, no near-full-frame), keeps the best composite-scored mask
-(bbox tightness, centrality, object-scale preference) — not simply the
+(bbox tightness, centrality, object-scale preference) - not simply the
 largest one. `none` skips SAM entirely
 (no download in the boot path), sets `sam_model = None`; a request with
 `segment: true` then returns `segmented: false` rather than 500 (the guard

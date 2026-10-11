@@ -24,7 +24,7 @@ Configuration resolves in this order, first hit wins per choice:
 
 1. `MODAL_VISION_MODEL_CARD`: path to a card JSON file (for example `registry/bioclip-plants.json`, relative to the server working directory; bare names like `bioclip-plants` are not resolved). The card sets all three choices at once.
 2. Single-line envs: `MODAL_VISION_MAIN_MODEL`, `MODAL_VISION_SEGMENTER`, `MODAL_VISION_FAST_GATE` override the corresponding choice individually.
-3. Legacy envs (`MODAL_VISION_MODEL` and friends) are still respected when nothing above them is set — except `MODAL_VISION_ADAPTIVE_SEGMENT`, which is parsed but never read; the request's `adaptive` field is the actual control.
+3. Legacy envs (`MODAL_VISION_MODEL` and friends) are still respected when nothing above them is set - except `MODAL_VISION_ADAPTIVE_SEGMENT`, which is parsed but never read; the request's `adaptive` field is the actual control.
 4. Built-in defaults: identical to the shipped `bioclip-plants` values except `label_defaults` (the card pins the 16 houseplant labels; the built-in default is `null`, so labels then come from each request).
 
 Use a card when you are changing two or more choices together, or when the
@@ -34,8 +34,8 @@ the default stack).
 
 ## Sample cards
 
-- `bioclip-plants.json`: the deployment default. BioCLIP 2 via open_clip over 16 houseplant taxa, SAM 2 segmentation, and the self fast gate. Every card field matches the built-in defaults, but the card pins `label_defaults` to the 16 houseplant labels while the built-in default is `null` (labels per request) — so the two are equivalent only for requests that supply `candidates`.
-- `dinov2-objects.json`: an image-only demonstration card, **not currently executable**. DINOv2 via transformers, no segmenter, no fast gate, CPU-eligible. There is no text encoder, so `encode_texts()` raises `NotImplementedError`, and the identify path encodes the label space before any reference matching — every request errors out. Kept as a backend demonstration and copy target; reference-only classification without a text encoder is planned.
+- `bioclip-plants.json`: the deployment default. BioCLIP 2 via open_clip over 16 houseplant taxa, SAM 2 segmentation, and the self fast gate. Every card field matches the built-in defaults, but the card pins `label_defaults` to the 16 houseplant labels while the built-in default is `null` (labels per request) - so the two are equivalent only for requests that supply `candidates`.
+- `dinov2-objects.json`: an image-only demonstration card, **not currently executable**. DINOv2 via transformers, no segmenter, no fast gate, CPU-eligible. There is no text encoder, so `encode_texts()` raises `NotImplementedError`, and the identify path encodes the label space before any reference matching - every request errors out. Kept as a backend demonstration and copy target; reference-only classification without a text encoder is planned.
 
 ## Cards never carry secrets
 
