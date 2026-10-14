@@ -17,19 +17,27 @@ cd vision-lab
 ## 2. Pull the package
 
 ```bash
-mtk pull vision
+mtk pull vision --tag <current-release>
 ```
+
+The package is vendored into `vendor/vision-server/`: a git checkout pinned to
+the exact release tag, read-only and drift-guarded.
 
 ## 3. Write the overlay
 
-`deploys/vision/deploy.json` names the app `<project>-vision`:
+`deploys/vision-server/deploy.json` names the app `<project>-vision`:
 
 ```json
-{ "pkg": "vision", "app_name": "vision-lab-vision" }
+{
+  "pkg": "vision",
+  "app_name": "vision-lab-vision",
+  "upstream": { "repo": "modal-vision-server", "tag": "<current-release>" }
+}
 ```
 
-`deploys/vision/deploy.sh` runs `modal deploy server/app.py` from the pulled
-checkout by path. Keep it in your project.
+`deploys/vision-server/deploy.sh` deploys the VENDORED copy under
+`vendor/vision-server/`: never a live checkout. `mtk deploy vision` runs it
+after the preflight, drift, and secrets gates.
 
 ## 4. Deploy
 
@@ -40,9 +48,6 @@ mtk deploy vision
 One secret is declared: `modal-vision-secret` (`API_TOKEN`, generated as hex32).
 If your model card needs a HuggingFace token, declare it in your overlay, not in
 the public repo.
-
-`mtk vision deploy` runs a deploy inside the package checkout with no overlay. Do
-not use it. Use `mtk deploy vision`.
 
 ## 5. Verify
 
@@ -56,3 +61,4 @@ curl -s https://<your-workspace>--<app>-serve.modal.run/health
 ## Next
 
 - Classify, segment, and tune the model card: [how-to](./how-to.md)
+
