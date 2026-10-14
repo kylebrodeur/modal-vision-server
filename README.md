@@ -6,6 +6,12 @@
 
 High-performance GPU-accelerated computer vision system deployed on Modal. This is a generic vision inference service: you pick the main model, you pick the segmenter, you pick the fast gate. The shipped example card is a BioCLIP + plant stack for biological taxon classification and precision specimen segmentation, but any encoder, segmenter, and gate combination that follows the contract works.
 
+## Docs
+
+- [Quickstart](docs/quickstart.md): from a new project to a deployed vision classification with a model card, using the `mtk` toolkit.
+- [How-to](docs/how-to.md): day-to-day operation of this server.
+- [Modal Toolkit](https://github.com/kylebrodeur/modal-toolkit): the operator CLI (`mtk`) that deploys it.
+
 ## The Vision Pillars
 
 ### Classification
