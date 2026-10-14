@@ -1,6 +1,6 @@
 [project]
 name = "modal-vision-server"
-version = "1.2.0"
+version = "1.2.1"
 description = "Generic GPU-accelerated vision classification + segmentation service on Modal"
 requires-python = ">=3.11,<3.13"
 dependencies = [
