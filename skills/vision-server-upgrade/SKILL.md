@@ -1,8 +1,6 @@
 ---
 name: vision-server-upgrade
-description: Upgrade + deploy-boundary discipline for the modal-vision-server checkout: tag upgrades, overlay-only deploys, model-card and weights-volume cautions.
-
-Use when upgrading/redeploying this repo or before modal commands inside this checkout.
+description: Upgrade + deploy-boundary discipline for the modal-vision-server checkout: tag upgrades, overlay-only deploys, model-card and weights-volume cautions. Use when upgrading/redeploying this repo or before modal commands inside this checkout.
 license: Apache-2.0
 metadata:
   author: kylebrodeur
@@ -37,3 +35,19 @@ Vision-specific cautions:
   `tools/guards/boot-provenance.py` for auditability.
 - Adaptive-segmentation + fast-gate thresholds are card fields; do not
   retune them in source to "fix" a lane's observations.
+
+## Operating with mtk
+
+Source of truth: the [quickstart](../../docs/quickstart.md) and
+[how-to](../../docs/how-to.md) in this repo, and the toolkit's `mtk` skill.
+
+```bash
+mtk init <project-id>      # from the project directory; checks prerequisites and the account
+mtk pull vision             # clone this repo into the repos root
+mtk deploy vision           # preflight the overlay, confirm secrets, run deploys/vision/deploy.sh
+mtk doctor --pkg vision     # health and drift
+```
+
+- Overlay: `deploys/vision/deploy.json` must name the app `<project>-vision`.
+- Secrets this package declares: modal-vision-secret (API_TOKEN, generated). `mtk deploy` asks before creating any.
+- Never run `modal deploy` inside this checkout.
